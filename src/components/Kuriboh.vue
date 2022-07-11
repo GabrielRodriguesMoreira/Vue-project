@@ -9,38 +9,44 @@ export default{
         },
         data: function () {
         return {
-        coins: 987654321,
-        passivecoins: 0.5,
+        coins: 0,
+        passivecoins: 0.01,
+        clickvalue: 1,
         }
-     },
-    methods:{
-        scroll(){
-            console.log('bunda');
         },
+    methods:{
         incrementCounter(){
-            this.coins+=1;
+            this.coins+=this.clickvalue;
+            let elem = document.createElement("h1");
+            elem.setAttribute('class','pointnumber')
+            elem.innerHTML = '+'+this.clickvalue;
+            document.getElementById('leftside_container').appendChild(elem);
+            setTimeout(()=>{elem.remove()},700)
         },
         passiveIncrement(){
              setInterval(() => {
         this.coins +=this.passivecoins;
-      }, 1000);
+            }, 100);
+        },
+        incressClickValue(value){
+            this.clickvalue+=1;
+            console.log(this.value)
         }
     },
-
 }
 
 </script>
 <template>
 <div class="main_container">
-    <section class="leftside_container">
-            <button v-on:click="incrementCounter"><img src="https://i.pinimg.com/originals/a3/28/77/a328772218affb0a03c8d70fff1fa104.png" alt="kuribohclick" ></button>
+    <section class="leftside_container" id='leftside_container' >
+            <button v-on:click="incrementCounter" ><img src="https://i.pinimg.com/originals/a3/28/77/a328772218affb0a03c8d70fff1fa104.png" alt="kuribohclick" ></button>
             <div class="coinsdiv">
                 <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
-                <h3>{{coins}} GOLD</h3>
+                <h3>{{Math.round(coins)}} GOLD</h3>
                 <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
             </div>
     </section>
-    <Upgrades/>
+    <Upgrades v-on:incressPassiveSignal='passiveIncrement' v-on:incressClickSignal='incressClickValue'/>
 </div>
 </template>
 
@@ -69,6 +75,7 @@ justify-content: space-between;
  background-color: transparent;
  border: none;
  width: 80%;
+ cursor: pointer;
 }
 .leftside_container button img{
     width: 100%;
@@ -87,7 +94,7 @@ justify-content: space-between;
     white-space: nowrap;
     width: 60%;
     max-height: 100px;
-    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+   background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 17%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.75) 75%, rgba(0,0,0,0) 100%);
     color: yellow;
     text-shadow: 1px 1px 1px #000, 
                  1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255)
@@ -113,7 +120,22 @@ justify-content: space-between;
     transform: translateX(-100%);
   }
 }
+.pointnumber{
+    position: absolute;
+    top: 100px;
+    animation: up .7s forwards;
+color: yellow;
+    text-shadow: 1px 1px 1px #000, 
+                 1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255)
+}
+@keyframes up {
+    0%{
 
+    }
+    100%{
+        transform: translateY(-20px);
+    }
+}
 @media only screen and (max-width: 600px) {
   .leftside_container {
     width: 100%;
