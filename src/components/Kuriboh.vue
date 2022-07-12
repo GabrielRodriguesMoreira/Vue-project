@@ -1,11 +1,11 @@
 <script type="text/javascript" >
 
-import Upgrades from './Upgrades.vue';
+import Upgrade from './Upgrade.vue';
 
 export default{
 
         components: {
-            Upgrades
+            Upgrade
         },
         data: function () {
         return {
@@ -28,10 +28,7 @@ export default{
         this.coins +=this.passivecoins;
             }, 100);
         },
-        incressClickValue(value){
-            this.clickvalue+=value.value;
-        }
-    },
+    }
 }
 
 </script>
@@ -45,7 +42,9 @@ export default{
                 <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
             </div>
     </section>
-    <Upgrades v-on:incressPassiveSignal='passiveIncrement' v-on:incressClickSignal='incressClickValue'/>
+    <section class="upgrades-container">
+        <Upgrade name="djonga"/>
+    </section>
 </div>
 </template>
 
@@ -75,6 +74,7 @@ justify-content: space-between;
  border: none;
  width: 80%;
  cursor: pointer;
+ -webkit-tap-highlight-color: transparent;
 }
 .leftside_container button img{
     width: 100%;
@@ -135,10 +135,18 @@ color: yellow;
         transform: translateY(-20px);
     }
 }
+
+
+.upgrades-container{
+
+    width: 35%;
+    padding-top: 10px;
+}
+
 @media only screen and (max-width: 600px) {
   .leftside_container {
     width: 100%;
   }
 }
-    
+
 </style>

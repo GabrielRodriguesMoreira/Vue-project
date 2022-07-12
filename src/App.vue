@@ -1,6 +1,6 @@
 <script setup>
 import Kuriboh from './components/Kuriboh.vue'
-import Upgrades from './components/Upgrades.vue';
+import Upgrade from './components/Upgrade.vue';
 </script>
 <template > 
   <Kuriboh/>
