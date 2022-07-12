@@ -29,8 +29,7 @@ export default{
             }, 100);
         },
         incressClickValue(value){
-            this.clickvalue+=1;
-            console.log(this.value)
+            this.clickvalue+=value.value;
         }
     },
 }

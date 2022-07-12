@@ -6,10 +6,10 @@ export default({
             this.$emit('incressPassiveSignal');
         },
         incressClick(){
-            this.$emit('incressClickSignal'),{
+            this.$emit('incressClickSignal',{
                 value: 1,
                
-            };
+            });
              console.log('Click');
         }
     },
