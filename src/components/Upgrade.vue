@@ -1,43 +1,44 @@
 <script>
 export default({
     props: {
-        name: String,
-        coins: Number,
-        Speed: Number,
-        Price: Number,
-        Value: Number,
+        name: String,      //nome do power up
+        coins: Number,     //gold atual para checar se a compra é válida
+        Speed: Number,    // velocidade da barrinha. Quando maior mais rápida 
+        Price: Number,    //valor do power up
+        Value: Number,    // Quanto de gold gera a cada ciclo
     },
     data() {
         return {
-            Preco: this.Price
+            Preco: this.Price,
+            id: String(Date.now())
         }
     },
     methods: {
         progressbar(){
+            console.log(this.id)
             if(this.coins>=this.Preco){
                 this.Preco = this.Preco + Math.round((25*this.Preco)/100);
                 //remover gold
                 this.$emit('RemoveGold',{
-                        Quantity:100,
+                        Quantity:this.Price,
                         });
+
                 //ativar barra
-                const progressBar = document.getElementsByClassName('progress-bar')[0]
-                const interval = setInterval(() => {
-                const computedStyle = getComputedStyle(progressBar)
-                const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
-                if(width<100){
+                let progressBar = document.getElementById(this.id)
+                let interval = setInterval(() => {
+                let computedStyle = getComputedStyle(progressBar)
+                let width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+                if(width<99){
                 progressBar.style.setProperty('--width', width + this.Speed)
                 } else {
-                    
-                    console.log('count')
-                    //adicionar gold passivo
-                    this.$emit('passiveEarn',{
-                        value:this.Value,
-                        });
-                    progressBar.style.setProperty('--width', 0);
-                    }
-                }, 1)
-            }
+                        //adicionar gold passivo
+                        this.$emit('passiveEarn',{
+                            value:this.Value,
+                            });
+                        progressBar.style.setProperty('--width', 0);
+                        }
+                    }, 1)
+                }
         },
     },
 })
@@ -47,7 +48,7 @@ export default({
     <div class="upgrade-container">
         <div class="name-progressbar">
             <h2>{{name}}</h2>
-            <div class="progress-bar" style="--width: 0"></div>
+            <div class="progress-bar" :id="[id]" style="--width: 0"></div>
         </div>
         <div class="price-button">
             <button v-on:click="progressbar">COMPRAR</button>
@@ -70,9 +71,11 @@ export default({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 40px;
-
+    margin: 30px 0;
 }
+
+
+
 .name-progressbar{
     width: 70%;
 }
@@ -80,9 +83,8 @@ export default({
 	position: relative;
 	width: 100%;
 	height: 1em;
-	background-color: #111;
+	background-color: rgb(255, 255, 238);
 	border-radius: 1.5em;
-	color: white;
 }
 
 .progress-bar::before {
@@ -95,7 +97,7 @@ export default({
 	bottom: .1em;
 	width: calc(var(--width, 0) * 1%);
 	min-width: 0;
-	max-width: calc(100% - 1em);
+	max-width: 100%;
 	background-color: aqua;
 	border-radius: 1em;
 	padding: 0;

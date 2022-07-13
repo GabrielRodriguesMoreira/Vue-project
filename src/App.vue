@@ -22,4 +22,26 @@ body *{
   box-sizing: border-box;
 }
 
+body *::-webkit-scrollbar-track
+{ 
+  box-shadow: none;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+body *::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+body *::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
+
+
+
+
+
 </style>

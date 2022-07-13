@@ -1,15 +1,19 @@
 <script type="text/javascript" >
 
 import Upgrade from './Upgrade.vue';
+import BoosterStore from './BoosterStore.vue';
+
+
 
 export default{
 
         components: {
-            Upgrade
+            Upgrade,
+            BoosterStore
         },
         data: function () {
         return {
-        coins: 99999,
+        coins: 0,
         }
         },
     methods:{
@@ -41,24 +45,62 @@ export default{
                 <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
             </div>
     </section>
-    <section class="upgrades-container" >
-        <Upgrade 
-                name="Power UP 1" 
-                :coins=coins
-                :Speed=0.1
-                :Price=50
-                :Value=1
-                v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
-        />
-        <Upgrade 
-                name="Power UP 2" 
-                :coins=coins
-                :Speed=0.1
-                :Price=500
-                :Value=3
-                v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
-        />
-    </section>
+
+    <div class="rightside_container">
+        <section class="upgrades-container" >
+            <Upgrade 
+                    name="Power UP 1"
+                    :coins=coins
+                    :Speed=0.1
+                    :Price=50
+                    :Value=3
+                    v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+            />
+            <Upgrade 
+                    name="Power UP 2"
+                    :coins=coins
+                    :Speed=0.05
+                    :Price=500
+                    :Value=5
+                    v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+            />
+            <Upgrade 
+                    name="Power UP 3"
+                    :coins=coins
+                    :Speed=1.
+                    :Price=1000
+                    :Value=1
+                    v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+            />
+            <Upgrade 
+                    name="Power UP 3"
+                    :coins=coins
+                    :Speed=1.
+                    :Price=1000
+                    :Value=1
+                    v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+            />
+            <Upgrade 
+                    name="Power UP 3"
+                    :coins=coins
+                    :Speed=1.
+                    :Price=1000
+                    :Value=1
+                    v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+            />
+            <Upgrade 
+                    name="Power UP 3"
+                    :coins=coins
+                    :Speed=1.
+                    :Price=1000
+                    :Value=1
+                    v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+            />
+        </section>
+        <section class='booster-container'>
+            <BoosterStore :coins='[coins]' v-on:cobrar='GoldRemove(1000)' />
+        </section>
+    </div>
 </div>
 </template>
 
@@ -134,6 +176,7 @@ justify-content: space-between;
   }
 }
 .pointnumber{
+    font-size: 35px;
     position: absolute;
     top: 100px;
     animation: up .7s forwards;
@@ -150,11 +193,20 @@ color: yellow;
     }
 }
 
-
-.upgrades-container{
-
+.rightside_container{
+    max-height: 100vh;
     width: 35%;
     padding-top: 10px;
+}
+
+
+
+
+.upgrades-container{
+    max-height: 300px;
+    background-color: rgba(0, 33, 82, 0.3);
+    border-radius: 0.4rem;
+    overflow: auto;
 }
 
 @media only screen and (max-width: 600px) {
