@@ -9,25 +9,24 @@ export default{
         },
         data: function () {
         return {
-        coins: 0,
-        passivecoins: 0.01,
-        clickvalue: 1,
+        coins: 99999,
         }
         },
     methods:{
-        incrementCounter(){
-            this.coins+=this.clickvalue;
+        incrementCounter(clickvalue){
+            this.coins+=clickvalue;
             let elem = document.createElement("h1");
-            elem.setAttribute('class','pointnumber')
-            elem.innerHTML = '+'+this.clickvalue;
+            elem.setAttribute('class','pointnumber');
+            elem.innerHTML = '+'+ clickvalue;
             document.getElementById('leftside_container').appendChild(elem);
             setTimeout(()=>{elem.remove()},700)
         },
-        passiveIncrement(){
-             setInterval(() => {
-        this.coins +=this.passivecoins;
-            }, 100);
+        convert(objvalue){
+             this.incrementCounter(objvalue.value);
         },
+        GoldRemove(quantity){
+            this.coins-=quantity.Quantity;
+        }
     }
 }
 
@@ -35,15 +34,30 @@ export default{
 <template>
 <div class="main_container">
     <section class="leftside_container" id='leftside_container' >
-            <button v-on:click="incrementCounter" ><img src="https://i.pinimg.com/originals/a3/28/77/a328772218affb0a03c8d70fff1fa104.png" alt="kuribohclick" ></button>
+            <button v-on:click="incrementCounter(1)" ><img src="https://i.pinimg.com/originals/a3/28/77/a328772218affb0a03c8d70fff1fa104.png" alt="kuribohclick" ></button>
             <div class="coinsdiv">
                 <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
                 <h3>{{Math.round(coins)}} GOLD</h3>
                 <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
             </div>
     </section>
-    <section class="upgrades-container">
-        <Upgrade name="djonga"/>
+    <section class="upgrades-container" >
+        <Upgrade 
+                name="Power UP 1" 
+                :coins=coins
+                :Speed=0.1
+                :Price=50
+                :Value=1
+                v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+        />
+        <Upgrade 
+                name="Power UP 2" 
+                :coins=coins
+                :Speed=0.1
+                :Price=500
+                :Value=3
+                v-on:passiveEarn="convert" v-on:RemoveGold="GoldRemove"
+        />
     </section>
 </div>
 </template>

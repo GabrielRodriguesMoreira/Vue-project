@@ -1,16 +1,43 @@
 <script>
 export default({
     props: {
-        name: String
+        name: String,
+        coins: Number,
+        Speed: Number,
+        Price: Number,
+        Value: Number,
+    },
+    data() {
+        return {
+            Preco: this.Price
+        }
     },
     methods: {
         progressbar(){
-            const progressBar = document.getElementsByClassName('progress-bar')[0]
-            setInterval(() => {
-            const computedStyle = getComputedStyle(progressBar)
-            const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
-            progressBar.style.setProperty('--width', width + .1)
-            }, 1)
+            if(this.coins>=this.Preco){
+                this.Preco = this.Preco + Math.round((25*this.Preco)/100);
+                //remover gold
+                this.$emit('RemoveGold',{
+                        Quantity:100,
+                        });
+                //ativar barra
+                const progressBar = document.getElementsByClassName('progress-bar')[0]
+                const interval = setInterval(() => {
+                const computedStyle = getComputedStyle(progressBar)
+                const width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
+                if(width<100){
+                progressBar.style.setProperty('--width', width + this.Speed)
+                } else {
+                    
+                    console.log('count')
+                    //adicionar gold passivo
+                    this.$emit('passiveEarn',{
+                        value:this.Value,
+                        });
+                    progressBar.style.setProperty('--width', 0);
+                    }
+                }, 1)
+            }
         },
     },
 })
@@ -20,11 +47,11 @@ export default({
     <div class="upgrade-container">
         <div class="name-progressbar">
             <h2>{{name}}</h2>
-            <div class="progress-bar" style="--width: 1"></div>
+            <div class="progress-bar" style="--width: 0"></div>
         </div>
         <div class="price-button">
             <button v-on:click="progressbar">COMPRAR</button>
-            <h2>100G</h2>
+            <h2>{{Preco}}G</h2>
         </div>
     </div>
 </template>
@@ -43,6 +70,7 @@ export default({
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 40px;
 
 }
 .name-progressbar{
@@ -66,11 +94,11 @@ export default({
 	top: .1em;
 	bottom: .1em;
 	width: calc(var(--width, 0) * 1%);
-	min-width: 0.1rem;
+	min-width: 0;
 	max-width: calc(100% - 1em);
-	background-color: #069;
+	background-color: aqua;
 	border-radius: 1em;
-	padding: 0.4em;
+	padding: 0;
 }
 .price-button {
     width: 35%;
