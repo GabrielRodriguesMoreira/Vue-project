@@ -1,86 +1,65 @@
 <script>
-import newcard from './newcard.vue'
+export default {
 
-export default{
-    props: {
-        coins: Number,
-    },
-    components:{
-            newcard
-    },
-    data(){
-        return{
-            ibagem: String,
-            newcard: null,
-            data: Object,
-            url: String,
-        }
-    },
-    mounted(){
-         fetch('https://db.ygoprodeck.com/api/v7/randomcard.php')
-        .then((res) => res.json())
-        .then(data => this.data = data)
-    },
-    methods: {
-        getdata(){
-            if(this.coins>1000){
-                this.$emit('cobrar');
-            fetch('https://db.ygoprodeck.com/api/v7/randomcard.php')
-            .then((res) => res.json())
-            .then(data => this.data = data)
-                this.url = String(this.data.card_images[0].image_url)
-                this.newcard = 'newcard'
-                        
-            }
-
-        },
-        deletar(){
-            this.newcard = null;
-        }
-
-    }
-    
 }
 </script>
 
 
 <template>
-    <div class='cardstore'>
-        <img v-on:click="getdata" src="https://www.yugioh-card.com/en/wp-content/uploads/2022/02/TAMA_550.png" alt="">
-        <p>1000G</p>
+    <div class="main_store_container">
+
+        <div class="StorePrice">
+            <h1>1000 G</h1>
+            <button> COMPRAR</button>
+        </div>
+        <div class="storeimg">
+            <img src="https://firescroll.net/wp-content/uploads/2022/02/YGO-Battles-of-Chaos.png" alt="">
+        </div>
+        
     </div>
-    <component :is="newcard" :src='[url]'  v-on:deletar="deletar"></component>
 </template>
 
 
-
-<style >
-.cardstore{
+<style scoped>
+.main_store_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    background: #00809D;
+    border: 3px solid #98E483;
+    box-shadow: 1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255);
+    border-radius: 15px;
+}
+.storeimg img{
+    max-height: 200px;
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.StorePrice{
+    margin-left: 30px;
+    height: 100%;
+    width: 40%;
+    text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
-    max-height: 300px;
-    position: relative;
+    font-size: 25px;
+    color: rgb(151, 255, 177);
+     text-shadow: 1px 1px 1px #000, 
+                 1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255)
+    
 }
-
-.cardstore img{
-    padding: 0;
-    margin: 0;
-    height: 250px;
-   
-}
-.cardstore img:hover{
- filter: drop-shadow(0px -0px 5px #08FF00);
-}
-.cardstore p{
-    position: relative;
-    color: yellow;
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 2px solid rgb(252, 252, 145);
-    padding: 10px 20px;
-    border-radius: 5rem;
-    box-shadow: 1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255);
-    text-align: center;
+.StorePrice button{
+    border: none;
+    background: hwb(107 15% 16%);
+    border-radius: 15px;
+    color: white;
+    width: 100%;
+    height: 40%;
+    font-size: 30px;
 }
 </style>
