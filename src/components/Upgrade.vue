@@ -1,30 +1,56 @@
 <script>
 export default{
-    methods: {
-         progressbarOn(){
-                let progressBar = document.getElementById('progress-bar')
+    props: {
+        name: String,      //nome do power up
+        coins: Number,     //gold atual para checar se a compra é válida
+        Speed: Number,    // velocidade da barrinha. Quando maior mais rápida 
+        Price: Number,    //valor do power up
+        value: Number,    // Quanto de gold gera a cada ciclo
+    },
+    data() {
+        return {
+            Preco: this.Price,
+            id: String(Date.now())
+        }
+    },
+     methods: {
+        progressbar(){
+            if(this.coins>=this.Preco){
+                this.Preco = this.Preco + Math.round((25*this.Preco)/100);
+                //remover gold
+                this.$emit('RemoveGold',{
+                        Quantity:this.Price,
+                        });
+
+                //ativar barra
+                let progressBar = document.getElementById(this.id)
                 let interval = setInterval(() => {
                 let computedStyle = getComputedStyle(progressBar)
                 let width = parseFloat(computedStyle.getPropertyValue('--width')) || 0
                 if(width<99){
-                progressBar.style.setProperty('--width', width + 1)
+                progressBar.style.setProperty('--width', width + this.Speed)
                 } else {
+                        //adicionar gold passivo
+                        this.$emit('passiveEarn',{
+                            value:this.value,
+                            });
                         progressBar.style.setProperty('--width', 0);
                         }
-                }, 1)
-        }
-    }
+                    }, 1)
+                }
+        },
+    },
 }
 
 </script>
 
 
 <template>
-    <div class="upgrade_container">
-        <div class="upgrade_price"> <p> 50 G</p></div>
+    <div class="upgrade_container" v-on:click="progressbar">
+        <div class="upgrade_price"> <p>{{Preco}} G</p></div>
         <div class="name-progressbar">
-            <p>Upgrade 1</p>
-            <div class="progress-bar" id='progress-bar' v-on:click="progressbarOn" style="--width: 0"></div>
+            <p>{{name}}</p>
+            <div class="progress-bar" :id="[id]" style="--width: 0"></div>
         </div>
     </div>
 </template>
@@ -41,6 +67,8 @@ export default{
     border: 3px solid #98E483;
     box-shadow: 1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255);
     border-radius: 5rem;
+    cursor: pointer;
+    user-select: none;
 }
 .upgrade_container:nth-child(1){
     margin-top: 20px;

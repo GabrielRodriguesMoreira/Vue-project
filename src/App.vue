@@ -17,7 +17,23 @@ export default {
   methods: {
           goldclick(clickvalue){
               this.coins+=clickvalue
-          }
+            let elem = document.createElement("h1");
+            elem.setAttribute('class','pointnumber');
+            elem.innerHTML = '+'+ clickvalue;
+            document.getElementById('kuriboh').appendChild(elem);
+            setTimeout(()=>{elem.remove()},700)
+          },
+          GoldRemove(quantity){
+            this.coins-=quantity.Quantity;
+        },
+        PassiveGold(value){
+          this.coins+=value.value;
+          let elem = document.createElement("h1");
+            elem.setAttribute('class','pointnumber');
+            elem.innerHTML = '+'+ value.value;
+            document.getElementById('kuriboh').appendChild(elem);
+            setTimeout(()=>{elem.remove()},700)
+        }
       }
 }
 </script>
@@ -26,19 +42,61 @@ export default {
 <template  >
 <div class="main_cointaner" id="master" >
   <section class="left_section" >
-    <Kuriboh v-on:kuribohclick="goldclick" />
+    <Kuriboh :coins=coins v-on:kuribohclick="goldclick" id='kuriboh'/>
     <div class='coins' v-on:click="calmo">
-      <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
+      <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓀕 𓀖 𓀗 𓀘 𓀙 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓀕 𓀖 𓀗 𓀘 𓀙</p>
       <h3>{{coins}} G</h3>
-      <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓁊 𓁋</p>
+      <p>𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓀕 𓀖 𓀗 𓀘 𓀙 𓀕 𓀖 𓀗 𓀘 𓀙 𓀚 𓀛 𓀜 𓀝 𓀞 𓀟 𓀠 𓀡 𓀢 𓀣 𓀤 𓀥 𓀦 𓀧 𓀨 𓀩 𓀪 𓀫 𓀬 𓁇 𓁈 𓁉 𓀕 𓀖 𓀗 𓀘 𓀙</p>
     </div>
   </section>
   <section class="right_section" >
     <div class='Upgrades'>
-      <Upgrade />
+      <Upgrade
+        name="Power UP 1"
+        :coins=coins
+        :Speed=0.3
+        :Price=50
+        :value=3
+        v-on:passiveEarn="PassiveGold" v-on:RemoveGold="GoldRemove"
+      />
+      <Upgrade
+        name="Power UP 2"
+        :coins=coins
+        :Speed=0.8
+        :Price=100
+        :value=5
+        v-on:passiveEarn="PassiveGold" v-on:RemoveGold="GoldRemove"
+      />
+      <Upgrade
+        name="Power UP 3"
+        :coins=coins
+        :Speed=0.1
+        :Price=300
+        :value=20
+        v-on:passiveEarn="PassiveGold" v-on:RemoveGold="GoldRemove"
+      />
+      <Upgrade
+        name="Power UP 4"
+        :coins=coins
+        :Speed=0.5
+        :Price=1000
+        :value=100
+        v-on:passiveEarn="PassiveGold" v-on:RemoveGold="GoldRemove"
+      />
+      <Upgrade
+        name="Power UP 5"
+        :coins=coins
+        :Speed=0.9
+        :Price=5000
+        :value=500
+        v-on:passiveEarn="PassiveGold" v-on:RemoveGold="GoldRemove"
+      />
     </div>
     <div class='store'>
-      <BoosterStore />
+      <BoosterStore 
+        :coins=coins
+        v-on:cobrar="GoldRemove"
+      />
     </div>
   </section>
 </div>
@@ -86,6 +144,7 @@ body *::-webkit-scrollbar-thumb{
 
 /* Contador de Dinheiro */
 .coins{
+
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -105,7 +164,8 @@ body *::-webkit-scrollbar-thumb{
     font-size: 35px;
 }
 .coins p{
-    animation: slidetext 5s infinite linear;
+      font-size: 14px;
+          animation: slidetext 5s infinite linear;
     }
 .coins p:nth-child(1){
     animation: slidetext 5s infinite linear reverse;
@@ -138,4 +198,22 @@ height: 40vh;
 align-items: center;
 background-color: transparent;
 }
+.pointnumber{
+    font-size: 35px;
+    position: absolute;
+    transform: translateY(-15%);
+    animation: up .7s forwards;
+  color: yellow;
+    text-shadow: 1px 1px 1px #000, 
+                 1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255)
+}
+@keyframes up {
+    0%{
+
+    }
+    100%{
+        transform: translateY(-20px);
+    }
+}
+
 </style>

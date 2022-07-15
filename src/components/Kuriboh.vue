@@ -1,13 +1,25 @@
 <script>
 export default{
+    props: {
+        coins: Number
+    },
     data(){
         return{
         clickvalue: 1,
+        Price: 50,
+        Level: 1
         }
     },
     methods: {
         emitclick(){
             this.$emit('kuribohclick',this.clickvalue)
+        },
+        upgradeclick(){
+            if(this.coins>=this.Price){
+                this.clickvalue +=1;
+                this.Level +=1;
+                this.Price = this.Price + Math.round((30*this.Price)/100);
+            }
         }
     }
 }
@@ -16,11 +28,11 @@ export default{
 <template>
 <div class="main_kuriboh_container">
     <img src="/kuriboh.png" alt="kuriboh img" v-on:click="emitclick">
-    <div class="kuriboh_upgrade">
+    <div class="kuriboh_upgrade" v-on:click="upgradeclick">
         <div class="kuriboh_level">
-            <p>LV    1</p>
+            <p>LV {{Level}} <br /> {{Price}} G</p>
         </div>
-        <p>Kuriboh <br /> +1  Gold por Click</p>
+        <p>Kuriboh <br /> {{Level}}  Gold por Click</p>
     </div>
 </div>
 </template>
@@ -28,6 +40,7 @@ export default{
 <style scoped>
 
 .main_kuriboh_container{
+        cursor: pointer;
     display: flex;
     position: relative;
     align-items: center;
@@ -52,6 +65,7 @@ export default{
     border-radius: 5rem;
 }
 .kuriboh_upgrade p{
+
     margin-left: 20px;
     font-size: 18px;
     text-align: center;
@@ -76,7 +90,7 @@ export default{
 }
 .kuriboh_level p{
     margin: 0;
-    font-size: 30px;
+    font-size: 24px;
 }
 
 </style>

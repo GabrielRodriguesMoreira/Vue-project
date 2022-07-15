@@ -1,6 +1,46 @@
 <script>
-export default {
+import newcard from './newcard.vue'
 
+export default {
+props: {
+        coins: Number,
+    },
+    components:{
+            newcard
+    },
+    data(){
+        return{
+            ibagem: String,
+            newcard: null,
+            data: Object,
+            url: String,
+        }
+    },
+    mounted(){
+         fetch('https://db.ygoprodeck.com/api/v7/randomcard.php')
+        .then((res) => res.json())
+        .then(data => this.data = data)
+    },
+    methods: {
+        getdata(){
+            if(this.coins>=1000){
+                this.$emit('cobrar',{
+                    Quantity: 1000
+                });
+            fetch('https://db.ygoprodeck.com/api/v7/randomcard.php')
+            .then((res) => res.json())
+            .then(data => this.data = data)
+                this.url = String(this.data.card_images[0].image_url)
+                this.newcard = 'newcard'
+                        
+            }
+
+        },
+        deletar(){
+            this.newcard = null;
+        }
+
+    }
 }
 </script>
 
@@ -10,13 +50,14 @@ export default {
 
         <div class="StorePrice">
             <h1>1000 G</h1>
-            <button> COMPRAR</button>
+            <button v-on:click="getdata"> COMPRAR</button>
         </div>
         <div class="storeimg">
             <img src="https://firescroll.net/wp-content/uploads/2022/02/YGO-Battles-of-Chaos.png" alt="">
         </div>
         
     </div>
+    <component :is="newcard" :src='[url]'  v-on:deletar="deletar"></component>
 </template>
 
 
@@ -48,7 +89,7 @@ export default {
     justify-content: space-around;
     align-items: center;
     font-size: 25px;
-    color: rgb(151, 255, 177);
+    color: rgb(226, 252, 78);
      text-shadow: 1px 1px 1px #000, 
                  1px 1px 5px rgb(0, 217, 255), -1px -1px 5px rgb(0, 217, 255)
     
@@ -61,5 +102,6 @@ export default {
     width: 100%;
     height: 40%;
     font-size: 30px;
+    cursor: pointer;
 }
 </style>
