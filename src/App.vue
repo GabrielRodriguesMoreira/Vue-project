@@ -130,6 +130,7 @@ body *::-webkit-scrollbar-thumb{
 }
 .main_cointaner{
   display: flex;
+
 }
 .left_section, .right_section{
   display: flex;
@@ -216,4 +217,15 @@ background-color: transparent;
     }
 }
 
+
+
+@media only screen and (max-width: 800px) {
+.main_cointaner{
+  flex-direction: column;
+  align-items: center;
+}
+.left_section, .right_section{
+  width: 100%;
+}
+}
 </style>
